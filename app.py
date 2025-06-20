@@ -4,27 +4,26 @@ import yfinance as yf
 import joblib
 from datetime import datetime, timedelta
 
-# Configuracion visual
 st.set_page_config(page_title="Predicción Dow Jones", layout="wide")
 st.title("📉 Predicción del cierre bursátil del Dow Jones")
-st.markdown("Este sistema utiliza el último registro disponible por cada ticker para predecir si el precio de cierre **subirá** o **bajará** al día siguiente. Podés descargar datos recientes y lanzar la predicción.")
 
-# Tickers principales (solo Dow Jones)
+st.markdown("""
+Este sistema descarga los últimos datos disponibles de cada empresa del Dow Jones y predice si el precio de cierre **subirá o bajará** al día siguiente, usando un modelo previamente entrenado.
+
+1. Descarga los datos de los últimos días.  
+2. Aplica el modelo y muestra la predicción.
+""")
+
 dow_tickers = [
     "AAPL", "AMGN", "AXP", "BA", "CAT", "CRM", "CSCO", "CVX", "DIS", "DOW",
     "GS", "HD", "HON", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK",
     "MSFT", "NKE", "PG", "TRV", "UNH", "V", "VZ", "WBA", "WMT"
 ]
 
-# Inicializar variables de estado si no existen
-if "df_recientes" not in st.session_state:
-    st.session_state.df_recientes = None
-
-st.markdown("### 📅 Paso 1: Descargar últimos precios de cierre")
-if st.button("📅 Descargar datos recientes"):
+if st.button("📥 Descargar datos y predecir"):
     try:
         fin = datetime.today()
-        inicio = fin - timedelta(days=5)
+        inicio = fin - timedelta(days=7)
 
         datos = []
         for ticker in dow_tickers:
@@ -32,46 +31,33 @@ if st.button("📅 Descargar datos recientes"):
             if not df.empty:
                 ultimo = df.iloc[-1]
                 datos.append({
-                    "Date": ultimo.name.date(),
                     "Ticker": ticker,
-                    "Close": round(ultimo["Close"], 2)
+                    "Date": df.index[-1].date(),
+                    "Open": ultimo["Open"],
+                    "High": ultimo["High"],
+                    "Low": ultimo["Low"],
+                    "Close": ultimo["Close"],
+                    "Volume": ultimo["Volume"]
                 })
 
-        df_recientes = pd.DataFrame(datos)
-        st.session_state.df_recientes = df_recientes
-        st.success("🚀 Datos descargados correctamente.")
-        st.dataframe(df_recientes, use_container_width=True)
+        df_pred = pd.DataFrame(datos)
 
-    except Exception as e:
-        st.error(f"Error al descargar los datos: {e}")
-
-st.markdown("### �udd2e Paso 2: Predecir movimiento de cierre")
-if st.button("🌿 Predecir movimiento de cierre"):
-    try:
-        if st.session_state.df_recientes is None:
-            st.warning("⚠️ Primero descargá los datos recientes.")
+        if df_pred.empty:
+            st.warning("No se encontraron datos.")
         else:
+            # Cargar modelo y features
             modelo = joblib.load("final_time_series_model.pkl")
-            feature_names = joblib.load("features_names_entrenamiento (9).pkl")
+            feature_names = ['Open', 'High', 'Low', 'Close', 'Volume']
+            X = df_pred[feature_names]
 
-            df_pred = st.session_state.df_recientes.copy()
-            for col in feature_names:
-                if col not in df_pred.columns:
-                    df_pred[col] = 0
+            df_pred["Predicción"] = modelo.predict(X)
+            df_pred["Predicción"] = df_pred["Predicción"].map({1: "📈 Sube", 0: "📉 Baja"})
 
-            X_pred = df_pred[feature_names]
-            predicciones = modelo.predict(X_pred)
-
-            df_pred["Prediccion"] = predicciones
-            df_pred["Prediccion"] = df_pred["Prediccion"].map({1: "📈 Sube", 0: "📉 Baja"})
-
-            st.success("🚀 Predicción realizada correctamente.")
-            st.dataframe(df_pred[["Date", "Ticker", "Close", "Prediccion"]].sort_values("Ticker"), use_container_width=True)
+            st.success("✅ Predicción realizada correctamente")
+            st.dataframe(df_pred[["Ticker", "Date", "Close", "Predicción"]].sort_values("Ticker"), use_container_width=True)
 
     except Exception as e:
         st.error(f"❌ Error durante la predicción: {e}")
 
-st.markdown("""
----
-st.caption("App creada por Sebas y equipo para el proyecto final - Dow Jones 2025")
-""")
+st.markdown("---")
+st.caption("App desarrollada por Sebas – Proyecto Dow Jones 2025")
