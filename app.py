@@ -60,4 +60,5 @@ if st.button("📥 Descargar datos y predecir"):
         st.error(f"❌ Error durante la predicción: {e}")
 
 st.markdown("---")
-st.caption("App desarrollada por Sebas – Proyecto Dow Jones 2025")
+st.caption("App desarrollada  – Proyecto Dow Jones 2025")
+
