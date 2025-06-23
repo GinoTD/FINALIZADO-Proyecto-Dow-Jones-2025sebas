@@ -74,7 +74,7 @@ if st.button("📥 Descargar datos y predecir"):
         df_pred = pd.DataFrame(datos)
 
         if df_pred.empty:
-            st.warning("No se encontraron datos para la fecha seleccionada.")
+            st.warning("El mercado está cerrado durante esta fecha, por favor, prueba con otra")
         else:
             feature_names = ['Open', 'High', 'Low', 'Close', 'Volume']
             X = df_pred[feature_names]
