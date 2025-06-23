@@ -27,11 +27,18 @@ selected_date = st.date_input(
 )
 
 st.markdown("""
-Este módulo extrae, para la fecha que selecciones, los datos bursátiles (apertura, máximo, mínimo, cierre y volumen) de cada componente del Dow Jones. A continuación, un modelo de machine learning preentrenado analiza estas series temporales para determinar si el precio de cierre subirá o bajará al día siguiente, basándose en patrones históricos aprendidos.
+Este módulo extrae, para la fecha que selecciones, los datos bursátiles (apertura, máximo, mínimo, cierre, volumen, etc...) de cada componente del Dow Jones. A continuación, un modelo de machine learning preentrenado analiza estas series temporales para determinar si el precio de cierre subirá o bajará al día siguiente, basándose en patrones históricos aprendidos.
 
-1. Seleccione una fecha.  
-2. Descarga los datos de esa fecha.  
-3. Aplica el modelo y muestra la predicción.
+1. **Selección de fecha**  
+   Se indica la fecha para realizar la predicción
+2. **Recopilación de datos**  
+   Se descargan, mediante la API de Yahoo Finance.  
+3. **Extracción de características**  
+   A partir de los datos recuperados, se construye un vector de atributos que sirve de entrada al modelo.
+4. **Predicción**  
+   El modelo, entrenado previamente sobre datos históricos y validado para maximizar la precisión, procesa el vector de atributos y genera una etiqueta binaria: “sube” o “baja” para el cierre del día siguiente.  
+5. **Presentación de resultados**  
+   Se muestra en pantalla, de forma ordenada, el ticker y la predicción asociada, facilitando la interpretación y la toma de decisiones.
 """)
 
 # --- Dow Jones tickers ---
