@@ -7,7 +7,7 @@ import gdown
 from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Predicción Dow Jones", layout="wide")
-st.title("📉 Predicción del cierre bursátil del Dow Jones")
+st.title("📉 Predicción del cierre bursátil de las empresas del Dow Jones")
 
 # --- Model download & load ---
 @st.cache_resource
@@ -42,7 +42,7 @@ dow_tickers = [
 ]
 
 # --- Fetch, predict and display ---
-if st.button("📥 Descargar datos y predecir"):
+if st.button("📥 Descargar datos y predecir para la fecha:", selected_date):
     try:
         # Use selected_date as the target day
         fin = datetime(
