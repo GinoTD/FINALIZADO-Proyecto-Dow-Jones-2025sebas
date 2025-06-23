@@ -102,7 +102,7 @@ El `RandomForestClassifier` está entrenado con datos históricos del Dow Jones 
 Equipo Proyecto Dow Jones 2025
 
 ---
-```bash
+```
 *¡Gracias por todo lo aprendido!*
 
 ```
