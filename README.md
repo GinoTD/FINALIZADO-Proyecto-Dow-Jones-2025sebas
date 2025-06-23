@@ -53,6 +53,12 @@ pip install -r requirements.txt
    streamlit run app.py
    ```
 
+5. **Abrir visualización**
+
+   ```bash
+   Pulsar el botón verde de la ventana emergente en la parte inferior derecha de la pantalla
+   ````
+   
 4. **Interacción**
    
    - Selecciona la fecha de análisis.  
