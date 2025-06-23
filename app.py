@@ -82,7 +82,7 @@ if st.button("📥 Descargar datos y predecir"):
             df_pred["Predicción"] = modelo.predict(X)
             df_pred["Predicción"] = df_pred["Predicción"].map({1: "📈 Sube", 0: "📉 Baja"})
 
-            st.success("✅ Predicción realizada correctamente para la fecha:", selected_date)
+            st.success("✅ Predicción realizada correctamente")
             st.dataframe(
                 df_pred[                 
                     ["Ticker", "Close", "Predicción"]
@@ -94,4 +94,4 @@ if st.button("📥 Descargar datos y predecir"):
         st.error(f"❌ Error durante la predicción: {e}")
 
 st.markdown("---")
-st.caption("App desarrollada  – Proyecto Dow Jones 2025")
+st.caption("App desarrollada  – Equipo Proyecto Dow Jones 2025")
