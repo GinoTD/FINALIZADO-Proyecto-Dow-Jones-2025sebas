@@ -84,16 +84,10 @@ El `RandomForestClassifier` está entrenado con datos históricos del Dow Jones 
 
 ## 🤝 Contribuciones
 
-Se aceptan pull requests para:
-- Nuevos modelos y arquitecturas.  
-- Más métricas de evaluación (precisión, recall, F1, etc.).  
-- Integración con fuentes de datos adicionales.
-
----
-
-## 📄 Licencia
-
-MIT License. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+- Pablo Morena
+- Pablo Rodado
+- Gino Tomas
+- Sebastian López
 
 ---
 
@@ -103,6 +97,6 @@ Equipo Proyecto Dow Jones 2025
 
 ---
 
-*¡Anticipa el pulso del mercado con datos y machine learning!*
+*¡Gracias por todo lo aprendido!*
 
 ```
