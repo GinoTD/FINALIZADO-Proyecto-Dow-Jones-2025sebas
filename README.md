@@ -53,13 +53,13 @@ pip install -r requirements.txt
    streamlit run app.py
    ```
 
-
-```
 4. **Interacción**
+   
+```
    - Selecciona la fecha de análisis.  
    - Haz clic en **Ejecutar predicción y validación**.  
    - Consulta la tabla con tickers, predicción, cierre real y resultado.
-
+````
 ---
 
 ## 🔍 Flujo de trabajo
