@@ -42,7 +42,7 @@ dow_tickers = [
 ]
 
 # --- Fetch, predict and display ---
-if st.button("📥 Descargar datos y predecir para la fecha:", selected_date):
+if st.button("📥 Descargar datos y predecir"):
     try:
         # Use selected_date as the target day
         fin = datetime(
@@ -82,7 +82,7 @@ if st.button("📥 Descargar datos y predecir para la fecha:", selected_date):
             df_pred["Predicción"] = modelo.predict(X)
             df_pred["Predicción"] = df_pred["Predicción"].map({1: "📈 Sube", 0: "📉 Baja"})
 
-            st.success("✅ Predicción realizada correctamente")
+            st.success("✅ Predicción realizada correctamente para la fecha:", selected_date)
             st.dataframe(
                 df_pred[                 
                     ["Ticker", "Close", "Predicción"]
