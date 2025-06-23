@@ -27,7 +27,7 @@ selected_date = st.date_input(
 )
 
 st.markdown("""
-Aqui se extraen, para la fecha que selecciones, los datos bursátiles (apertura, máximo, mínimo, cierre, volumen, etc...) de cada componente del Dow Jones. A continuación, un modelo de machine learning preentrenado analiza estas series temporales para determinar si el precio de cierre subirá o bajará al día siguiente, basándose en patrones históricos aprendidos.
+Aqui se extrae, para la fecha que selecciones, los datos bursátiles (apertura, máximo, mínimo, cierre, volumen, etc...) de cada componente del Dow Jones. A continuación, un modelo de machine learning preentrenado analiza estas series temporales para determinar si el precio de cierre subirá o bajará al día siguiente, basándose en patrones históricos aprendidos.
 
 1. **Selección de fecha**  
    Se indica la fecha para realizar la predicción
