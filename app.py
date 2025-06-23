@@ -1,11 +1,24 @@
+import os
 import streamlit as st
 import pandas as pd
 import yfinance as yf
 import joblib
+import gdown
 from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Predicción Dow Jones", layout="wide")
 st.title("📉 Predicción del cierre bursátil del Dow Jones")
+
+# --- Model download & load ---
+@st.cache_resource
+def load_model_from_drive():
+    url = "https://drive.google.com/uc?id=1nPYvsXTFaErWuLoiyYTrGA4NbwLz615J"
+    output_path = "final_time_series_model.pkl"
+    if not os.path.exists(output_path):
+        gdown.download(url, output_path, quiet=False)
+    return joblib.load(output_path)
+
+modelo = load_model_from_drive()
 
 st.markdown("""
 Este sistema descarga los últimos datos disponibles de cada empresa del Dow Jones y predice si el precio de cierre **subirá o bajará** al día siguiente, usando un modelo previamente entrenado.
@@ -27,7 +40,11 @@ if st.button("📥 Descargar datos y predecir"):
 
         datos = []
         for ticker in dow_tickers:
-            df = yf.download(ticker, start=inicio.strftime("%Y-%m-%d"), end=fin.strftime("%Y-%m-%d"))
+            df = yf.download(
+                ticker,
+                start=inicio.strftime("%Y-%m-%d"),
+                end=fin.strftime("%Y-%m-%d")
+            )
             if not df.empty:
                 ultimo = df.iloc[-1]
                 datos.append({
@@ -45,8 +62,6 @@ if st.button("📥 Descargar datos y predecir"):
         if df_pred.empty:
             st.warning("No se encontraron datos.")
         else:
-            # Cargar modelo y features
-            modelo = joblib.load("final_time_series_model.pkl")
             feature_names = ['Open', 'High', 'Low', 'Close', 'Volume']
             X = df_pred[feature_names]
 
@@ -54,11 +69,14 @@ if st.button("📥 Descargar datos y predecir"):
             df_pred["Predicción"] = df_pred["Predicción"].map({1: "📈 Sube", 0: "📉 Baja"})
 
             st.success("✅ Predicción realizada correctamente")
-            st.dataframe(df_pred[["Ticker", "Date", "Close", "Predicción"]].sort_values("Ticker"), use_container_width=True)
+            st.dataframe(
+                df_pred[["Ticker", "Date", "Close", "Predicción"]]
+                .sort_values("Ticker"),
+                use_container_width=True
+            )
 
     except Exception as e:
         st.error(f"❌ Error durante la predicción: {e}")
 
 st.markdown("---")
 st.caption("App desarrollada  – Proyecto Dow Jones 2025")
-
