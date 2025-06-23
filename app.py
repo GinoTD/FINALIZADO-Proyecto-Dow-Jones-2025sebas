@@ -7,7 +7,7 @@ import gdown
 from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Predicción Dow Jones", layout="wide")
-st.title("📉 Predicción del cierre bursátil de las empresas del Dow Jones")
+st.title("📉 Predicción del cierre bursátil de las empresas del Dow Jones 📉")
 
 # --- Model download & load ---
 @st.cache_resource
@@ -27,7 +27,7 @@ selected_date = st.date_input(
 )
 
 st.markdown("""
-Este sistema descarga los datos de cada empresa del Dow Jones para la fecha seleccionada y predice si el precio de cierre **subirá o bajará** al día siguiente, usando un modelo previamente entrenado.
+Este módulo extrae, para la fecha que selecciones, los datos bursátiles (apertura, máximo, mínimo, cierre y volumen) de cada componente del Dow Jones. A continuación, un modelo de machine learning preentrenado analiza estas series temporales para determinar si el precio de cierre subirá o bajará al día siguiente, basándose en patrones históricos aprendidos.
 
 1. Seleccione una fecha.  
 2. Descarga los datos de esa fecha.  
