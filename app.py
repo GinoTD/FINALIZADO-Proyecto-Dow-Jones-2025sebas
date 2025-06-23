@@ -20,36 +20,50 @@ def load_model_from_drive():
 
 modelo = load_model_from_drive()
 
-st.markdown("""
-Este sistema descarga los últimos datos disponibles de cada empresa del Dow Jones y predice si el precio de cierre **subirá o bajará** al día siguiente, usando un modelo previamente entrenado.
+# --- User date selection ---
+selected_date = st.date_input(
+    "Seleccione la fecha para descargar datos", 
+    datetime.today().date()
+)
 
-1. Descarga los datos de los últimos días.  
-2. Aplica el modelo y muestra la predicción.
+st.markdown("""
+Este sistema descarga los datos de cada empresa del Dow Jones para la fecha seleccionada y predice si el precio de cierre **subirá o bajará** al día siguiente, usando un modelo previamente entrenado.
+
+1. Seleccione una fecha.  
+2. Descarga los datos de esa fecha.  
+3. Aplica el modelo y muestra la predicción.
 """)
 
+# --- Dow Jones tickers ---
 dow_tickers = [
     "AAPL", "AMGN", "AXP", "BA", "CAT", "CRM", "CSCO", "CVX", "DIS", "DOW",
     "GS", "HD", "HON", "IBM", "INTC", "JNJ", "JPM", "KO", "MCD", "MMM", "MRK",
     "MSFT", "NKE", "PG", "TRV", "UNH", "V", "VZ", "WBA", "WMT"
 ]
 
+# --- Fetch, predict and display ---
 if st.button("📥 Descargar datos y predecir"):
     try:
-        fin = datetime.today()
-        inicio = fin - timedelta(days=7)
+        # Use selected_date as the target day
+        fin = datetime(
+            year=selected_date.year, 
+            month=selected_date.month, 
+            day=selected_date.day
+        )
+        inicio = fin
+        fin_plus = fin + timedelta(days=1)
 
         datos = []
         for ticker in dow_tickers:
             df = yf.download(
                 ticker,
                 start=inicio.strftime("%Y-%m-%d"),
-                end=fin.strftime("%Y-%m-%d")
+                end=fin_plus.strftime("%Y-%m-%d")
             )
             if not df.empty:
                 ultimo = df.iloc[-1]
                 datos.append({
                     "Ticker": ticker,
-                    "Date": df.index[-1].date(),
                     "Open": ultimo["Open"],
                     "High": ultimo["High"],
                     "Low": ultimo["Low"],
@@ -60,7 +74,7 @@ if st.button("📥 Descargar datos y predecir"):
         df_pred = pd.DataFrame(datos)
 
         if df_pred.empty:
-            st.warning("No se encontraron datos.")
+            st.warning("No se encontraron datos para la fecha seleccionada.")
         else:
             feature_names = ['Open', 'High', 'Low', 'Close', 'Volume']
             X = df_pred[feature_names]
@@ -70,8 +84,9 @@ if st.button("📥 Descargar datos y predecir"):
 
             st.success("✅ Predicción realizada correctamente")
             st.dataframe(
-                df_pred[["Ticker", "Date", "Close", "Predicción"]]
-                .sort_values("Ticker"),
+                df_pred[                 
+                    ["Ticker", "Close", "Predicción"]
+                ].sort_values("Ticker"),
                 use_container_width=True
             )
 
