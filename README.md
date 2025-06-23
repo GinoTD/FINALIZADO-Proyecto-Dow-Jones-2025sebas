@@ -36,12 +36,11 @@ pip install -r requirements.txt
 
 1. **Clonar el repositorio**
 
-   ```bash
-   git clone [https://github.com/tu-usuario/dow-jones-prediction.git](https://github.com/tu-usuario/dow-jones-prediction.git)
+```bash
+git clone [https://github.com/tu-usuario/dow-jones-prediction.git](https://github.com/tu-usuario/dow-jones-prediction.git)
 cd dow-jones-prediction
-   ```
+ ```
 
-````
 2. **Instalar dependencias**
    
 ```bash
