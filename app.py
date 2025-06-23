@@ -22,7 +22,7 @@ modelo = load_model_from_drive()
 
 # --- User date selection ---
 selected_date = st.date_input(
-    "Seleccione la fecha para descargar datos (este modelo ha sido entrenado con datos entre 2015 y 2025)", 
+    "Seleccione la fecha para descargar datos ***(este modelo ha sido entrenado con datos entre 2015 y 2025)***", 
     datetime.today().date()
 )
 
