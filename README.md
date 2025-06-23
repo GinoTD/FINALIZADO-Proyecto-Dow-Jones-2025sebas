@@ -37,23 +37,23 @@ pip install -r requirements.txt
 1. **Clonar el repositorio**
 
    ```bash
-   ```
-
-git clone [https://github.com/tu-usuario/dow-jones-prediction.git](https://github.com/tu-usuario/dow-jones-prediction.git)
+   git clone [https://github.com/tu-usuario/dow-jones-prediction.git](https://github.com/tu-usuario/dow-jones-prediction.git)
 cd dow-jones-prediction
+   ```
 
 ````
 2. **Instalar dependencias**
-   ```bash
+   
+```bash
 pip install -r requirements.txt
 ````
 
 3. **Ejecutar la aplicación**
 
    ```bash
+   streamlit run app.py
    ```
 
-streamlit run app.py
 
 ```
 4. **Interacción**
