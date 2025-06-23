@@ -66,7 +66,7 @@ pip install -r requirements.txt
 1. **Selección de fecha**  
    El usuario elige un día hábil (2015–2025).
 2. **Descarga de datos**  
-   Se obtienen `Open`, `High`, `Low`, `Close` y `Volume` de Yahoo Finance.
+   Se obtienen `Open`, `High`, `Low`, `Close`, `Volume`, etc, de Yahoo Finance.
 3. **Extracción de características**  
    Se construye un vector con las variables anteriores.
 4. **Predicción**  
