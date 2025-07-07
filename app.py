@@ -101,4 +101,4 @@ if st.button("📥 Descargar datos y predecir"):
         st.error(f"❌ Error durante la predicción: {e}")
 
 st.markdown("---")
-st.caption("App desarrollada  – Equipo Proyecto Dow Jones 2025")
+st.caption("App desarrollada  – Equipo Proyecto Dow Jones 2025") 
